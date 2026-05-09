@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Peteti-Nagendra/bookings/pkg/config"
-	"github.com/Peteti-Nagendra/bookings/pkg/handlers"
-	"github.com/Peteti-Nagendra/bookings/pkg/render"
+	"github.com/Peteti-Nagendra/bookings/internal/config"
+	"github.com/Peteti-Nagendra/bookings/internal/handlers"
+	"github.com/Peteti-Nagendra/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 
