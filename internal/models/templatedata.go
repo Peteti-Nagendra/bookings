@@ -1,5 +1,7 @@
 package models
 
+import "github.com/Peteti-Nagendra/bookings/internal/forms"
+
 type TemplateData struct {
 	StringMap map[string]string
 	IntMap    map[string]int
@@ -8,5 +10,6 @@ type TemplateData struct {
 	CSRFToken string
 	Flash     string
 	Warning   string
-	error     string
+	Error     string
+	Form      *forms.Forms
 }
