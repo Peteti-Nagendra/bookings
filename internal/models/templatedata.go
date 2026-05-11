@@ -11,5 +11,5 @@ type TemplateData struct {
 	Flash     string
 	Warning   string
 	Error     string
-	Form      *forms.Forms
+	Form      *forms.Form
 }

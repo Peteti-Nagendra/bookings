@@ -3,12 +3,13 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+
 	"github.com/Peteti-Nagendra/bookings/internal/config"
 	"github.com/Peteti-Nagendra/bookings/internal/forms"
 	"github.com/Peteti-Nagendra/bookings/internal/models"
 	"github.com/Peteti-Nagendra/bookings/internal/render"
-	"log"
-	"net/http"
 )
 
 // Repo the repository used by the handlers
@@ -84,8 +85,8 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	form := forms.New(r.PostForm)
 
 	form.Required("first_name", "last_name", "email")
-	form.MinLen("first_name", 3, r)
-	form.EmailValidator("email")
+	form.MinLength("first_name", 3)
+	form.IsEmail("email")
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
