@@ -21,6 +21,25 @@ var session *scs.SessionManager
 
 // main is the main function of application
 func main() {
+	err := run()
+	if err != nil {
+		log.Fatal(err)
+	}
+	// http.HandleFunc("/", handlers.Repo.Home)
+	// http.HandleFunc("/about", handlers.Repo.About)
+
+	fmt.Printf(fmt.Sprintf("Starting application on port: %s", portNum))
+
+	// _ = http.ListenAndServe(portNum, nil)
+	srv := &http.Server{
+		Addr:    portNum,
+		Handler: Routes(&app),
+	}
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+}
+
+func run() error {
 	gob.Register(models.Reservations{})
 
 	//This varible has to be changes in production env
@@ -37,24 +56,16 @@ func main() {
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("Cannot create template cache")
+		return err
+
 	}
 
 	app.TemplateCache = tc
 	app.UseCache = false
 	repo := handlers.NewRepo(&app)
-	handlers.NewHandler(repo)
-	render.NewTemplate(&app)
+	handlers.NewHandlers(repo)
+	render.NewTemplates(&app)
 
-	// http.HandleFunc("/", handlers.Repo.Home)
-	// http.HandleFunc("/about", handlers.Repo.About)
+	return nil
 
-	fmt.Printf(fmt.Sprintf("Starting application on port: %s", portNum))
-
-	// _ = http.ListenAndServe(portNum, nil)
-	srv := &http.Server{
-		Addr:    portNum,
-		Handler: Routes(&app),
-	}
-	err = srv.ListenAndServe()
-	log.Fatal(err)
 }
